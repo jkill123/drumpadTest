@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Hello World!</title>
+</head>
+<body>
+<form:form method="POST"
+           action="upload"
+           enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>FileName</td>
+            <td><input type="text" name="name" /></td>
+        </tr>
+        <tr>
+            <td>Logo</td>
+            <td><input type="file" name="file" /></td>
+        </tr>
+        <tr>
+            <td>Select a file to upload</td>
+            <td><input type="file" name="file" /></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" /></td>
+        </tr>
+    </table>
+</form:form>
+
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>
