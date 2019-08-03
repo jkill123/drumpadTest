@@ -9,13 +9,13 @@ import java.util.stream.Stream;
 public interface StorageService {
     void init();
 
-//    String store(MultipartFile file);
+    String store(MultipartFile file);
 
-    String store(MultipartFile file, Path fileDir);
+//    String store(MultipartFile file, Path fileDir);
 
-//    Stream<Path> loadAll();
+    Stream<Path> loadAll();
 
-    Stream<Path> loadAll(Path fileDir);
+//    Stream<Path> loadAll(Path fileDir);
 
     Path load(String filename);
 

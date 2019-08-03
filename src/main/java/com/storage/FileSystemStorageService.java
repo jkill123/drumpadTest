@@ -1,6 +1,5 @@
 package com.storage;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -45,7 +44,7 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public String store(MultipartFile file, Path fileDir) {
+    public String store(MultipartFile file) {
 
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
         try {
@@ -59,7 +58,6 @@ public class FileSystemStorageService implements StorageService {
                                 + filename);
             }
             try (InputStream inputStream = file.getInputStream()) {
-                rootLocation = fileDir;
                 Files.copy(inputStream, this.rootLocation.resolve(filename),
                         StandardCopyOption.REPLACE_EXISTING);
             }
@@ -72,9 +70,8 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public Stream<Path> loadAll(Path fileDir) {
+    public Stream<Path> loadAll() {
         try {
-            rootLocation = fileDir;
             return Files.walk(this.rootLocation, 1)
                     .filter(path -> !path.equals(this.rootLocation))
                     .map(this.rootLocation::relativize);

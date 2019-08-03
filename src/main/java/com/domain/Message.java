@@ -9,8 +9,9 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String logo;
-    private String fileName;
-    private String filePath;
+    private String fileOriginalName;
+
+    private String fileDataBaseName;
 
     public Message() {
     }
@@ -31,19 +32,19 @@ public class Message {
         this.logo = logo;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFileOriginalName() {
+        return fileOriginalName;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFileOriginalName(String fileOriginalName) {
+        this.fileOriginalName = fileOriginalName;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getFileDataBaseName() {
+        return fileDataBaseName;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setFileDataBaseName(String fileDataBaseName) {
+        this.fileDataBaseName = fileDataBaseName;
     }
 }
