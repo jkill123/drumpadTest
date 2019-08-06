@@ -3,9 +3,14 @@ package com.controller;
 import com.domain.FileResponse;
 import com.domain.Message;
 import com.google.gson.Gson;
+import com.model.IdListREsponse;
+import com.model.ObjectListResponse;
 import com.repos.MessageRepo;
+import com.service.SendService;
 import com.storage.MediaTypeUtils;
 import com.storage.StorageService;
+import com.utils.IntArrayFromString;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +28,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -35,11 +41,13 @@ public class FileController {
     private final ServletContext servletContext;
     private final StorageService storageService;
     private final MessageRepo messageRepo;
+    private final SendService sendService;
 
-    public FileController(StorageService storageService, ServletContext servletContext, MessageRepo messageRepo) {
+    public FileController(StorageService storageService, ServletContext servletContext, MessageRepo messageRepo, SendService sendService) {
         this.storageService = storageService;
         this.servletContext = servletContext;
         this.messageRepo = messageRepo;
+        this.sendService = sendService;
     }
 
     /***
@@ -126,28 +134,26 @@ public class FileController {
 
         if(id.equals("1234")){
 
-            List<Message> list = messageRepo.findAll();
-            List<Integer> idList = new ArrayList<>();
-            for (Message value : list) {
-                idList.add(value.getId());
-            }
-            Gson gson = new Gson();
-            gson.toJson(idList);
-            System.out.println(gson.toJson(idList));
+            String resultGs = sendService.getIds();
 
-            return gson.toJson(idList);
+            return resultGs;
         }else
             return String.valueOf(new Exception("go hell kid"));
     }
 
-//    @PostMapping("/upload-multiple-files")
-//    @ResponseBody
-//    public List<FileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) throws IOException {
-//        List<FileResponse> collect = new ArrayList<>();
-//        for (MultipartFile file : files) {
-//            FileResponse fileResponse = uploadFile("lol", file, file);
-//            collect.add(fileResponse);
-//        }
-//        return collect;
-//    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/getObjects", method = RequestMethod.POST)
+
+    public @ResponseBody String getObjects(@RequestParam ("id") String id,
+                                           @RequestParam ("list") String list){
+        if(id.equals("1234")){
+
+        int[] result = IntArrayFromString.arrayFromString(list);
+
+        String resultGs = sendService.getObjects(result);
+
+        return resultGs;}
+        else return String.valueOf(new Exception("go hell kid"));
+    }
 }

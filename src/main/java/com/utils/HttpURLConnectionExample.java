@@ -1,12 +1,15 @@
 
 package com.utils;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 
 public class HttpURLConnectionExample {
 
@@ -14,9 +17,9 @@ public class HttpURLConnectionExample {
 
     private static final String GET_URL = "http://localhost:9090/SpringMVCExample";
 
-    private static final String POST_URL = "http://192.168.0.189:8080/getIdList";
+    private static final String POST_URL = "http://192.168.0.189:8080/getObjects";
 
-    private static final String POST_PARAMS = "id=1234";
+    private static final String POST_PARAMS = "id=1234&list=3,7,8,9";
 
     public static void main(String[] args) throws IOException {
         sendPOST();
